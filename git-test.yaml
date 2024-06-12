@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: git-test
+spec:
+  steps:
+    - name: install-tool
+      image: quay.io/rockylinux/rockylinux:9
+      script: |
+        dnf install git php-cli -y
+    - name: clone-code
+      image: quay.io/rockylinux/rockylinux:9
+      script: |
+        git clone http://gogs.local:30080/gogs/php-ip.gi
+    - name: verify-code
+      image: quay.io/rockylinux/rockylinux:9
+      script: |
+        ls -l php-ip/
